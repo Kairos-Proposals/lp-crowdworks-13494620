@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos ご提案｜楽天市場 特集LP コーディング</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E1B2E;
+    --navy-light:#172A45;
+    --coral:#FF6B4A;
+    --teal:#2EC4B6;
+    --bg:#F4F1EC;
+    --card:#FFFFFF;
+    --text-main:#1C2430;
+    --text-sub:#5B6472;
+    --border:#E2DED5;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Noto Sans JP', sans-serif;
+    color:var(--text-main);
+    background:var(--bg);
+    line-height:1.8;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk','Noto Sans JP',sans-serif;
+    letter-spacing:0.01em;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    background:var(--navy);
+    color:#fff;
+    padding:90px 0 70px;
+    overflow:hidden;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:42px 42px;
+    opacity:0.6;
+    pointer-events:none;
+  }
+
+  .hero::after{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,107,74,0.22), transparent 70%);
+    top:-180px;
+    right:-160px;
+    pointer-events:none;
+  }
+
+  .hero-inner{
+    position:relative;
+    z-index:2;
+  }
+
+  .tag-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    color:var(--teal);
+    background:rgba(46,196,182,0.1);
+    border:1px solid rgba(46,196,182,0.35);
+    border-radius:4px;
+    padding:6px 12px;
+    margin-bottom:28px;
+  }
+
+  .hero h1{
+    font-size:clamp(28px, 4.2vw, 46px);
+    font-weight:700;
+    line-height:1.5;
+    margin-bottom:22px;
+    max-width:720px;
+  }
+
+  .hero h1 span{
+    color:var(--coral);
+  }
+
+  .hero p.lead{
+    color:#C9D2E0;
+    font-size:16px;
+    max-width:560px;
+    margin-bottom:40px;
+  }
+
+  .hero-foot{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:#8FA0B8;
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  .hero-foot span{color:var(--coral);}
+
+  /* ===== BROWSER MOCK ===== */
+  .mock-section{
+    margin-top:56px;
+    position:relative;
+    z-index:2;
+  }
+
+  .browser-mock{
+    background:#fff;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.45);
+    max-width:640px;
+  }
+
+  .browser-bar{
+    background:#E7E3DB;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+  }
+
+  .browser-bar .dot{
+    width:10px;height:10px;border-radius:50%;
+    display:inline-block;
+  }
+
+  .browser-url{
+    margin-left:10px;
+    background:#fff;
+    border-radius:4px;
+    padding:4px 12px;
+    font-size:11px;
+    color:var(--text-sub);
+    font-family:'JetBrains Mono',monospace;
+    flex:1;
+  }
+
+  .browser-body{
+    padding:22px;
+    background:#FAF9F6;
+  }
+
+  .m-block{
+    border-radius:6px;
+    background:linear-gradient(135deg,#EFEAE1,#E2DCD0);
+  }
+
+  .m-hero{
+    height:90px;
+    margin-bottom:14px;
+    background:linear-gradient(135deg, rgba(255,107,74,0.18), rgba(46,196,182,0.18));
+    border:1px dashed rgba(14,27,46,0.25);
+  }
+
+  .m-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:14px;
+  }
+
+  .m-grid .m-block{height:56px;}
+
+  .m-cta{
+    height:34px;
+    width:140px;
+    background:var(--coral);
+    border-radius:20px;
+    margin:0 auto;
+  }
+
+  /* ===== SECTION COMMON ===== */
+  section{
+    padding:86px 0;
+  }
+
+  .section-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--coral);
+    letter-spacing:0.08em;
+    margin-bottom:12px;
+    display:block;
+  }
+
+  .section-title{
+    font-size:clamp(24px,3vw,32px);
+    font-weight:700;
+    margin-bottom:18px;
+    color:var(--navy);
+  }
+
+  .section-desc{
+    color:var(--text-sub);
+    max-width:620px;
+    font-size:15.5px;
+    margin-bottom:10px;
+  }
+
+  /* ===== UNDERSTANDING ===== */
+  .understand{
+    background:var(--card);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+
+  .understand-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:48px;
+    margin-top:36px;
+    align-items:start;
+  }
+
+  .understand-text p{
+    color:var(--text-sub);
+    font-size:15.5px;
+    margin-bottom:16px;
+  }
+
+  .understand-text strong{
+    color:var(--navy);
+    font-weight:700;
+  }
+
+  .tag-list{
+    background:var(--navy);
+    color:#D7DEE8;
+    border-radius:10px;
+    padding:26px 24px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13.5px;
+    line-height:2.1;
+  }
+
+  .tag-list .k{color:var(--teal);}
+  .tag-list .v{color:#FFD9CC;}
+  .tag-list .c{color:#7E8DA3;}
+
+  /* ===== VALUE CARDS ===== */
+  .value-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    margin-top:40px;
+  }
+
+  .vcard{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:28px 24px;
+    position:relative;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+
+  .vcard:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 30px -12px rgba(14,27,46,0.18);
+  }
+
+  .vcard::before{
+    content:"";
+    position:absolute;
+    top:0;left:24px;right:24px;
+    height:3px;
+    background:linear-gradient(90deg,var(--coral),var(--teal));
+    border-radius:2px;
+  }
+
+  .vicon{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--coral);
+    margin-bottom:16px;
+    display:inline-block;
+    background:rgba(255,107,74,0.08);
+    padding:4px 10px;
+    border-radius:4px;
+  }
+
+  .vcard h3{
+    font-size:17px;
+    color:var(--navy);
+    margin-bottom:10px;
+    font-weight:700;
+  }
+
+  .vcard p{
+    font-size:14px;
+    color:var(--text-sub);
+  }
+
+  /* ===== FLOW ===== */
+  .flow-section{
+    background:var(--navy);
+    color:#fff;
+  }
+
+  .flow-section .section-title{color:#fff;}
+  .flow-section .section-desc{color:#9FABC0;}
+
+  .flow-grid{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:16px;
+    position:relative;
+  }
+
+  .flow-step{
+    background:var(--navy-light);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+    padding:22px 16px;
+    position:relative;
+  }
+
+  .flow-step .num{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--coral);
+    font-size:13px;
+    margin-bottom:10px;
+  }
+
+  .flow-step h4{
+    font-size:14.5px;
+    margin-bottom:8px;
+    color:#fff;
+  }
+
+  .flow-step p{
+    font-size:12.5px;
+    color:#9FABC0;
+    line-height:1.6;
+  }
+
+  /* ===== CLOSING ===== */
+  .closing{
+    background:linear-gradient(135deg, #FFF 0%, #F4F1EC 60%, #EFE8DD 100%);
+    text-align:center;
+    position:relative;
+  }
+
+  .closing-box{
+    background:var(--navy);
+    border-radius:18px;
+    padding:60px 40px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .closing-box::after{
+    content:"";
+    position:absolute;
+    width:380px;height:380px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(46,196,182,0.18), transparent 70%);
+    bottom:-180px;right:-120px;
+  }
+
+  .closing-box h2{
+    font-size:clamp(22px,3.2vw,30px);
+    margin-bottom:16px;
+  }
+
+  .closing-box p{
+    color:#B9C3D6;
+    max-width:520px;
+    margin:0 auto 30px;
+    font-size:15px;
+  }
+
+  .cta-btn{
+    display:inline-block;
+    background:var(--coral);
+    color:#fff;
+    font-weight:700;
+    font-size:15px;
+    padding:15px 36px;
+    border-radius:30px;
+    text-decoration:none;
+    transition:background .2s ease, transform .2s ease;
+    position:relative;
+    z-index:2;
+  }
+
+  .cta-btn:hover{
+    background:var(--teal);
+    transform:translateY(-2px);
+  }
+
+  .cta-sub{
+    margin-top:18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:#7E8DA3;
+    position:relative;
+    z-index:2;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 0;
+    font-size:12px;
+    color:var(--text-sub);
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:900px){
+    .understand-grid{grid-template-columns:1fr;}
+    .value-grid{grid-template-columns:repeat(2,1fr);}
+    .flow-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+  @media (max-width:560px){
+    .hero{padding:64px 0 50px;}
+    section{padding:60px 0;}
+    .value-grid{grid-template-columns:1fr;}
+    .flow-grid{grid-template-columns:1fr;}
+    .closing-box{padding:44px 22px;}
+    .browser-body{padding:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <span class="tag-label mono">&lt;proposal from="Kairos" to="アイビビッド様"&gt;</span>
+    <h1>素材という原石に、<br><span>売れる導線</span>を編み込む。</h1>
+    <p class="lead">
+      楽天市場 特集LPのHTML・CSSコーディングについて、Kairosよりご提案いたします。
+      デザインと画像という「素材」を、楽天GOLDの仕様の中で正確に、崩さず、速く形にします。
+    </p>
+    <div class="hero-foot">
+      <div><span>▸</span> 楽天GOLD / コンテンツページ実装</div>
+      <div><span>▸</span> PC・スマホ両対応</div>
+      <div><span>▸</span> 単発から継続案件へ</div>
+    </div>
+
+    <div class="mock-section">
+      <div class="browser-mock">
+        <div class="browser-bar">
+          <span class="dot" style="background:#FF6B4A;"></span>
+          <span class="dot" style="background:#2EC4B6;"></span>
+          <span class="dot" style="background:#C9D2E0;"></span>
+          <div class="browser-url">item.rakuten.co.jp/ibivivid/special-lp/</div>
+        </div>
+        <div class="browser-body">
+          <div class="m-block m-hero"></div>
+          <div class="m-grid">
+            <div class="m-block"></div>
+            <div class="m-block"></div>
+            <div class="m-block"></div>
+          </div>
+          <div class="m-cta"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="understand">
+  <div class="wrap">
+    <span class="section-label mono">// 01 — Understanding</span>
+    <h2 class="section-title">このご依頼、こう受け止めています</h2>
+
+    <div class="understand-grid">
+      <div class="understand-text">
+        <p>
+          今回ご依頼いただく特集LPは、<strong>デザイン・画像・テキストが支給される</strong>前提のお仕事です。
+          つまり問われているのは「作る力」よりも、<strong>支給された素材の意図を壊さずに、
+          楽天GOLDという制約の中で正確に組み上げる力</strong>だと理解しています。
+        </p>
+        <p>
+          商品リンクや導線設定はLPの売上を直接左右する部分です。
+          ただタグを並べるのではなく、<strong>クリックされる場所に、正しいリンクが、
+          正しく置かれているか</strong>まで含めて責任を持ちたいと考えています。
+        </p>
+        <p>
+          また「単発ではなく継続の可能性がある」という点も重要な前提として捉えています。
+          最初の一本で、仕様理解・対応速度・コミュニケーションの質を示し、
+          <strong>次回以降も安心して任せられる相手</strong>であることをお伝えしたいです。
+        </p>
+      </div>
+
+      <div class="tag-list">
+        <div><span class="c">&lt;!-- 案件要件の整理 --&gt;</span></div>
+        <div><span class="k">platform</span>: <span class="v">"楽天GOLD / コンテンツページ"</span></div>
+        <div><span class="k">assets</span>: <span class="v">"デザイン・画像・テキスト支給予定"</span></div>
+        <div><span class="k">scope</span>: <span class="v">"コーディング・画像配置・リンク導線"</span></div>
+        <div><span class="k">check</span>: <span class="v">"PC / SP 表示確認 + 修正対応"</span></div>
+        <div><span class="k">term</span>: <span class="v">"単発 → 継続の可能性あり"</span></div>
+        <div><span class="k">pricing</span>: <span class="v">"固定報酬 / 概算見積もりから合意"</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="value">
+  <div class="wrap">
+    <span class="section-label mono">// 02 — What Kairos Provides</span>
+    <h2 class="section-title">Kairosが提供できる価値</h2>
+    <p class="section-desc">
+      「組める」ことは前提として、EC運用の現場で求められる精度とスピードをご提供します。
+    </p>
+
+    <div class="value-grid">
+      <div class="vcard">
+        <span class="vicon mono">&lt;gold/&gt;</span>
+        <h3>楽天GOLD実装の精度</h3>
+        <p>システム変数・商品リンクタグ・楽天特有のタグ構造を踏まえた、表示崩れのない実装を行います。</p>
+      </div>
+
+      <div class="vcard">
+        <span class="vicon mono">▣ ▣</span>
+        <h3>PC・SP完全対応</h3>
+        <p>デザインの意図を損なわないレスポンシブ実装。スマホ経由の購入導線まで丁寧に確認します。</p>
+      </div>
+
+      <div class="vcard">
+        <span class="vicon mono">→ link</span>
+        <h3>導線まで見据えた設計</h3>
+        <p>画像配置と商品リンクを単なる作業ではなく、クリック率・CVに繋がる設計として扱います。</p>
+      </div>
+
+      <div class="vcard">
+        <span class="vicon mono">⏱ fast</span>
+        <h3>スピードと柔軟な修正対応</h3>
+        <p>素材受領後すぐに着手できる体制。修正範囲・回数も事前にすり合わせ、対応を明確にします。</p>
+      </div>
+
+      <div class="vcard">
+        <span class="vicon mono">∞ next</span>
+        <h3>継続を見据えた土台づくり</h3>
+        <p>再利用しやすいコード構成を意識し、次回以降の別案件にもスムーズに引き継げる形にします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="flow-section">
+  <div class="wrap">
+    <span class="section-label mono">// 03 — Flow</span>
+    <h2 class="section-title">進め方とスケジュールイメージ</h2>
+    <p class="section-desc">素材のご支給状況に合わせて、下記のような流れを想定しています。日数は目安です。</p>
+
+    <div class="flow-grid">
+      <div class="flow-step">
+        <div class="num mono">Step 01</div>
+        <h4>ヒアリング・仕様確認</h4>
+        <p>ページ長・商品数・実装方法（GOLD／コンテンツページ）をすり合わせます。</p>
+      </div>
+      <div class="flow-step">
+        <div class="num mono">Step 02</div>
+        <h4>素材受領・構造設計</h4>
+        <p>支給された画像・テキストをもとに、HTML構造とリンク導線を設計します。</p>
+      </div>
+      <div class="flow-step">
+        <div class="num mono">Step 03</div>
+        <h4>コーディング実装</h4>
+        <p>受領後1〜3日を目安に、PC・SP両対応で実装を進めます。</p>
+      </div>
+      <div class="flow-step">
+        <div class="num mono">Step 04</div>
+        <h4>表示確認・初稿提出</h4>
+        <p>PC・スマホでの表示を確認し、初稿をご確認いただきます。</p>
+      </div>
+      <div class="flow-step">
+        <div class="num mono">Step 05</div>
+        <h4>修正対応・納品</h4>
+        <p>ご指摘を反映し、納品または公開反映まで対応範囲に応じて実施します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="closing-box">
+      <span class="tag-label mono" style="margin-bottom:20px;">&lt;/proposal&gt;</span>
+      <h2>まずは一本、確かな仕事で信頼を。</h2>
+      <p>
+        着手可能日・概算見積もり・対応範囲は、クラウドワークスのメッセージにてすぐにご案内できます。
+        単発のご依頼として、まずは丁寧に、確実に形にすることからご一緒させてください。
+      </p>
+      <a href="#" class="cta-btn">クラウドワークスでメッセージを送る</a>
+      <div class="cta-sub">Kairos — Web制作・システム開発チーム</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © Kairos — この提案は「アイビビッド」様の募集内容を踏まえて作成しています。
+</footer>
+
+</body>
+</html>
